@@ -84,6 +84,6 @@ public class BBOTZ_AutonomousMode_Long_Delay extends LinearOpMode {
         // Advance 30" to knock off big ball, then stop
         autonomousModeCommonMethods.driveForwardUsingTime(2500);
 
-        autonomousModeCommonMethods.turnRight(800);
+        // autonomousModeCommonMethods.turnRight(800);
     }
 }

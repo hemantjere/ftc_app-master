@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class BBOTZ_AutonomousMode_Common_Methods {
 
+    private double SPRINT_SPEED = .8d;
     private double MAX_DRIVE_SPEED = .3d;
     private double MAX_DRIVE_SPEED_BEACON = .15d;
     private double MAX_DRIVE_SPEED_PRESS_BEACON = 1d;
@@ -30,13 +31,12 @@ public class BBOTZ_AutonomousMode_Common_Methods {
     private double ODS_TAPE_VALUE = 0.5d;
     private double TIME_TO_MOVE_TOWARDS_BEACON = 8000;
     private double ADJUSTMENT_ERROR = .1;
-    private int MAX_BEACON_PRESSES = 3;
+    private int MAX_BEACON_PRESSES = 7;
     private double PREFERRED_LIGHT_VALUE = .6d;
+    protected static int BEACON_BLUE = 0;
+    protected static int BEACON_RED = 1;
 
     private boolean LED_ON = true;
-
-    protected static int GET_RED = 0;
-    protected static int GET_BLUE = 1;
 
     private long STOP_TIME = 250;
 
@@ -87,6 +87,16 @@ public class BBOTZ_AutonomousMode_Common_Methods {
     protected void driveForwardUsingTime(long driveTime) throws InterruptedException {
         leftDrive.setPower(MAX_DRIVE_SPEED);
         rightDrive.setPower(MAX_DRIVE_SPEED);
+        Thread.sleep(driveTime);
+        leftDrive.setPower(STOP_DRIVE);
+        rightDrive.setPower(STOP_DRIVE);
+        Thread.sleep(STOP_TIME);
+    }
+
+    // sprint forwards
+    protected void sprintForwardUsingTime(long driveTime) throws InterruptedException {
+        leftDrive.setPower(SPRINT_SPEED);
+        rightDrive.setPower(SPRINT_SPEED);
         Thread.sleep(driveTime);
         leftDrive.setPower(STOP_DRIVE);
         rightDrive.setPower(STOP_DRIVE);
@@ -174,29 +184,32 @@ public class BBOTZ_AutonomousMode_Common_Methods {
         boolean done = false;
         int numberOfTries = 1;
 
-        turnColorSensorLedOn();
+        //turnColorSensorLedOn();
 
         while (! done) {
             // Press the beacon button
             driveBackwardUsingTimePressBeacon(1000);
 
             // move forward to read color
-            driveForwardUsingTime(100);
+            driveForwardUsingTime(150);
+
+            //sleep
+            Thread.sleep(300);
 
             // Test for desired color
-            if (desiredColor == 0) {
+            if (desiredColor == BEACON_BLUE) {
                 if (colorSensor.blue() > colorSensor.red()) {
                     done = true;
                 }
             }
-            else if (desiredColor == 1) {
+            else if (desiredColor == BEACON_RED) {
                 if (colorSensor.red() > colorSensor.blue()) {
                     done = true;
                 }
             }
 
             // Drive forward after color checked to press again
-            driveForwardUsingTime(700);
+            driveForwardUsingTime(500);
 
             // If number of tries exceeded, stop
             numberOfTries++;
@@ -246,6 +259,24 @@ public class BBOTZ_AutonomousMode_Common_Methods {
     protected void tankTurnRightSlow(long driveTime) throws InterruptedException{
         rightDrive.setPower(-0.2);
         leftDrive.setPower(0.2);
+        Thread.sleep(driveTime);
+        rightDrive.setPower(STOP_DRIVE);
+        leftDrive.setPower(STOP_DRIVE);
+        Thread.sleep(STOP_TIME);
+    }
+
+    protected void tankTurnLeftSlow(long driveTime) throws InterruptedException{
+        rightDrive.setPower(0.2);
+        leftDrive.setPower(-0.2);
+        Thread.sleep(driveTime);
+        rightDrive.setPower(STOP_DRIVE);
+        leftDrive.setPower(STOP_DRIVE);
+        Thread.sleep(STOP_TIME);
+    }
+
+    protected void tankTurnLeftSlowModBlue(long driveTime) throws InterruptedException{
+        rightDrive.setPower(0.2);
+        leftDrive.setPower(-0.27);
         Thread.sleep(driveTime);
         rightDrive.setPower(STOP_DRIVE);
         leftDrive.setPower(STOP_DRIVE);

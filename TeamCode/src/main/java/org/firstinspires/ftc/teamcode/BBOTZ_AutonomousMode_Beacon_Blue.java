@@ -28,13 +28,13 @@ public class BBOTZ_AutonomousMode_Beacon_Blue extends LinearOpMode {
         runtime.reset();
 
         // Launch ball
-        //autonomousModeCommonMethods.launchBall();
+        autonomousModeCommonMethods.launchBall();
 
         // Advance forward to avoid hitting back wall
-        autonomousModeCommonMethods. driveForwardUsingTime(1000);
+        autonomousModeCommonMethods.driveForwardUsingTime(600);
 
         // Tankturn towards beacon #1 tape
-        autonomousModeCommonMethods.tankTurnLeft(800);
+        autonomousModeCommonMethods.tankTurnRight(530);
 
         // Drive fast towards beacon #1 tape
         autonomousModeCommonMethods.driveForwardUsingTimeBeacon(1500);
@@ -42,8 +42,11 @@ public class BBOTZ_AutonomousMode_Beacon_Blue extends LinearOpMode {
         // Search for beacon #1 tape using ODS sensor
         autonomousModeCommonMethods.driveForwardUsingODS();
 
+        // Drive back a little to correct overshoot
+        autonomousModeCommonMethods.driveBackwardUsingTime(350);
+
         // Tankturn to have back face beacon #1
-        autonomousModeCommonMethods.tankTurnRight(1700);
+        autonomousModeCommonMethods.tankTurnLeftSlowModBlue(1600);
 
         // After tankturn, is the sensor still on beacon #1 tape?
         // if not, adjust here
@@ -57,18 +60,24 @@ public class BBOTZ_AutonomousMode_Beacon_Blue extends LinearOpMode {
         // autonomousModeCommonMethods.driveForwardUsingTime(800);
 
         // Change beacon #1 color
-        // autonomousModeCommonMethods.pressBeaconForColor(0);
+        autonomousModeCommonMethods.pressBeaconForColor(BBOTZ_AutonomousMode_Common_Methods.BEACON_BLUE);
 
         // Start moving to next beacon
 
         // Tankturn to beacon #2 tape (slightly away from wall)
-        autonomousModeCommonMethods.tankTurnLeft(1300);
+        autonomousModeCommonMethods.tankTurnRight(830);
+
+        // Drive forward so that same tape is not detected
+        autonomousModeCommonMethods.driveForwardUsingTime(800);
 
         // Search for beacon #2 tape using ODS sensor
         autonomousModeCommonMethods.driveForwardUsingODS();
 
+        // Drive back a little to correct overshoot
+        autonomousModeCommonMethods.driveBackwardUsingTime(250);
+
         // Tankturn to have back face beacon #2
-        autonomousModeCommonMethods.tankTurnRight(2000);
+        autonomousModeCommonMethods.tankTurnLeftSlowModBlue(1250);
 
         // Follow tape to beacon #2, going backwards
         // autonomousModeCommonMethods.followTapeUsingODS();
@@ -77,16 +86,16 @@ public class BBOTZ_AutonomousMode_Beacon_Blue extends LinearOpMode {
         // autonomousModeCommonMethods.driveForwardUsingTime(800);
 
         // Change beacon #2 color
-        autonomousModeCommonMethods.pressBeaconForColor(1);
+        autonomousModeCommonMethods.pressBeaconForColor(BBOTZ_AutonomousMode_Common_Methods.BEACON_BLUE);
 
         // Tankturn right to face cap ball
-        autonomousModeCommonMethods.tankTurnRight(1000);
+        autonomousModeCommonMethods.tankTurnLeftSlowModBlue(675);
 
         // Advance 20" to knock off big ball, then stop
-        autonomousModeCommonMethods.driveForwardUsingTime(1500);
+        autonomousModeCommonMethods.sprintForwardUsingTime(1600);
 
         // Park on center ramp
-        autonomousModeCommonMethods.turnLeft(800);
+        // autonomousModeCommonMethods.turnLeft(800);
 
     }
 }
